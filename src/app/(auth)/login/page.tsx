@@ -5,9 +5,7 @@ import { FC, useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { toast } from 'react-hot-toast'
 
-interface pageProps {}
-
-const page: FC<pageProps> =  ({}) => {
+const Page: FC =  () => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
@@ -74,4 +72,4 @@ const page: FC<pageProps> =  ({}) => {
     </>
 }
 
-export default page
+export default Page
