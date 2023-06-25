@@ -12,7 +12,7 @@ const page = async ({}) => {
     console.log(session?.user.email)
 
     return (
-        <pre>{JSON.stringify(session)}</pre>
+        <pre>Dashboard</pre>
     )
 }
 

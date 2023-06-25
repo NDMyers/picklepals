@@ -36,7 +36,6 @@ export const authOptions: NextAuthOptions = {
     ],
     callbacks: {
         async jwt ({ token, user }) {
-            // const dbUser = (await db.get(`user:${token.id}`)) as User | null
             const dbUserResult = (await fetchRedis('get', `user:${token.id}`)) as
                 | string
                 | null
