@@ -40,7 +40,7 @@ export const authOptions: NextAuthOptions = {
                 | string
                 | null
 
-            console.log(dbUserResult)
+            // console.log(dbUserResult)
 
             if( !dbUserResult ) {
                 if( user ) {
