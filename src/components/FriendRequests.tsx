@@ -33,7 +33,7 @@ const FriendRequests: FC<FriendRequestsProps> = ({ incomingFriendRequests, sessi
             pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:incoming_friend_requests`))
             pusherClient.unbind('incoming_friend_requests', friendRequestHandler)
         }
-    }, [])
+    }, [sessionId])
 
     // Create functions to deny/accept friend requests
     const acceptFriend = async ( senderId: string ) => {

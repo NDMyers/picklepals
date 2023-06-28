@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { FC, useEffect, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import UnseenChatToast from './UnseenChatToast'
+import { User } from 'next-auth'
 
 interface SidebarChatListProps {
     friends: User[]
@@ -57,7 +58,10 @@ const SidebarChatList: FC<SidebarChatListProps> = ({ friends, sessionId }) => {
 
         return () => {
             pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:chats`))
-            pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:friends`))                 
+            pusherClient.unsubscribe(toPusherKey(`user:${sessionId}:friends`))
+            
+            pusherClient.unbind('new_message', chatHandler)
+            pusherClient.unbind('new_friend', newFriendHandler)
         }
     }, [pathname, sessionId, router])
 

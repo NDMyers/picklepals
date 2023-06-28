@@ -3,6 +3,8 @@ import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { getServerSession } from "next-auth"
 import { z } from "zod"
+import { pusherServer } from '@/lib/pusher';
+import { toPusherKey } from "@/lib/utils"
 
 // Naming is important for this
 export async function POST( req: Request ) {
@@ -40,13 +42,14 @@ export async function POST( req: Request ) {
             return new Response('No friend request', { status: 400 })
         }
 
+        // Notify added user if they are online
+        pusherServer.trigger(toPusherKey(`user:${idToAdd}:friends`), 'new_friend', {})
+
         // Now add friend if previous checks are passed.
         await db.sadd(`user:${session.user.id}:friends`, idToAdd)
 
         // Add to requesters friend list if successfully add
         await db.sadd(`user:${idToAdd}:friends`, session.user.id)
-
-        // await db.srem(`user:${idToAdd}:incoming_friend_requests`, session.user.id)
 
         await db.srem(`user:${session.user.id}:incoming_friend_requests`, idToAdd)
 
