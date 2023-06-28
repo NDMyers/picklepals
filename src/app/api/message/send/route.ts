@@ -1,6 +1,8 @@
 import { fetchRedis } from "@/helpers/redis"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
+import { pusherServer } from "@/lib/pusher"
+import { toPusherKey } from "@/lib/utils"
 import { Message, messageValidator } from "@/lib/validations/message"
 import { timeStamp } from "console"
 import { nanoid } from "nanoid"
@@ -45,6 +47,15 @@ export async function POST(req: Request) {
         // validate to enforce custom properties if we wanted too
         // can change in message.ts to limit text size, etc.
         const message = messageValidator.parse(messageData)
+
+        // Notify all connected chatroom clients
+        pusherServer.trigger(toPusherKey(`chat:${chatId}`), 'incoming-message', message)
+
+        pusherServer.trigger(toPusherKey(`user:${friendId}:chats`), 'new_message', {
+            ...message,
+            senderImg: sender.image,
+            senderName: sender.name,
+        })
 
         // All valid, send the message
         await db.zadd(`chat:${chatId}:messages`, {
