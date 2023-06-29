@@ -42,16 +42,26 @@ export async function POST( req: Request ) {
             return new Response('No friend request', { status: 400 })
         }
 
+        const [userRaw, friendRaw] = (await Promise.all([
+            fetchRedis('get',`user:${session.user.id}`),
+            fetchRedis('get',`user:${idToAdd}`)
+        ])) as [string, string]
+
+        const user = JSON.parse(userRaw) as User
+        const friend = JSON.parse(friendRaw) as User
+
         // Notify added user if they are online
-        pusherServer.trigger(toPusherKey(`user:${idToAdd}:friends`), 'new_friend', {})
 
-        // Now add friend if previous checks are passed.
-        await db.sadd(`user:${session.user.id}:friends`, idToAdd)
+        await Promise.all([
+            pusherServer.trigger(toPusherKey(`user:${idToAdd}:friends`), 'new_friend', user),
+            pusherServer.trigger(toPusherKey(`user:${session.user.id}:friends`), 'new_friend', friend),
 
-        // Add to requesters friend list if successfully add
-        await db.sadd(`user:${idToAdd}:friends`, session.user.id)
-
-        await db.srem(`user:${session.user.id}:incoming_friend_requests`, idToAdd)
+            // Now add friend if previous checks are passed.
+            db.sadd(`user:${session.user.id}:friends`, idToAdd),
+            // Add to requesters friend list if successfully add
+            db.sadd(`user:${idToAdd}:friends`, session.user.id),
+            db.srem(`user:${session.user.id}:incoming_friend_requests`, idToAdd),
+        ])
 
         return new Response('OK', { status: 200 })
     } catch (error) {

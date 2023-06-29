@@ -3,7 +3,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Menu, X } from 'lucide-react'
 import Link from 'next/link'
-import { FC, Fragment, useState } from 'react'
+import { FC, Fragment, useEffect, useState } from 'react'
 import Button, { buttonVariants } from './ui/Button'
 import { Icons } from './Icons'
 import SignOutButton from './SignOutButton'
@@ -12,6 +12,7 @@ import FriendRequestSideBarOptions from './FriendRequestSideBarOptions'
 import SidebarChatList from './SidebarChatList'
 import { Session, User } from 'next-auth'
 import { SideBarOption } from '@/types/typings'
+import { usePathname } from 'next/navigation'
 
 interface MobileChatLayoutProps {
     friends: User[]
@@ -23,6 +24,13 @@ interface MobileChatLayoutProps {
 const MobileChatLayout: FC<MobileChatLayoutProps> = ({ friends, session, sidebarOptions, unseenRequestCount }) => {
 
     const [open, setOpen] = useState<boolean>(false)
+
+    const pathname = usePathname()
+
+    // Mobile menu auto closes when you choose a new path
+    useEffect(() => {
+      setOpen(false)
+    }, [pathname])
 
     return (
 
