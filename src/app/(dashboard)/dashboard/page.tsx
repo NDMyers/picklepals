@@ -10,9 +10,9 @@ import { ChevronRightIcon } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-interface PageProps {}
+interface pageProps {}
 
-const Page = async ({}) => {
+const page = async ({}) => {
 
     const session = await getServerSession(authOptions)
 
@@ -83,4 +83,4 @@ const Page = async ({}) => {
     )
 }
 
-export default Page
+export default page
