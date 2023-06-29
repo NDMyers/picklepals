@@ -30,7 +30,7 @@ const Page: FC =  () => {
                 <div className='flex flex-col items-center gap-8'>
                     <div className='flex flex-col items-center justify-center'>
                         <Image 
-                            src='/../public/images/pickleball.png'
+                            src='/images/pickleball.png'
                             alt='Pickleball Paddle'
                             width={100}
                             height={100}
