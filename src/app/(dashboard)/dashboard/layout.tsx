@@ -1,4 +1,5 @@
 import FriendRequestSideBarOptions from '@/components/FriendRequestSideBarOptions'
+// import GroupChatSideBarOptions from '@/components/GroupChatSideBarOptions'
 import { Icon, Icons } from '@/components/Icons'
 import MobileChatLayout from '@/components/MobileChatLayout'
 import SidebarChatList from '@/components/SidebarChatList'
@@ -90,6 +91,14 @@ const layout = async ( { children } : layoutProps ) => {
                                     initialUnseenRequestCount={ unseenRequestCount }
                                     />
                                 </li>
+
+                                {/* group chat section */}
+                                {/* <li>
+                                    <GroupChatSideBarOptions
+                                    sessionId={ session.user.id }
+                                    />
+                                </li> */}
+
                             </ul>
                         </li>
 

@@ -51,6 +51,7 @@ const ChatInput: FC<ChatInputProps> = ({ chatPartner, chatId }) => {
                         }
                     }}
                     rows={1}
+                    defaultValue={`Message ${chatPartner.name}`}
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     placeholder={`Message ${chatPartner.name}`}
