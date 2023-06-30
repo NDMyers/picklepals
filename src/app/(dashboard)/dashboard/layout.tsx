@@ -1,3 +1,4 @@
+import CourtSideBarOptions from '@/components/CourtSideBarOptions'
 import FriendRequestSideBarOptions from '@/components/FriendRequestSideBarOptions'
 // import GroupChatSideBarOptions from '@/components/GroupChatSideBarOptions'
 import { Icon, Icons } from '@/components/Icons'
@@ -98,6 +99,13 @@ const layout = async ( { children } : layoutProps ) => {
                                     sessionId={ session.user.id }
                                     />
                                 </li> */}
+
+                                {/* pickleball court finder section  */}
+                                <li>
+                                    <CourtSideBarOptions
+                                    sessionId={ session.user.id }
+                                    />
+                                </li>
 
                             </ul>
                         </li>
