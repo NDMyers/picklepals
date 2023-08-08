@@ -5,5 +5,8 @@ A website aimed to give pickleball players the ability to search for nearby pick
 Production build currently only has the real-time chatting and friend functionalities with the court finding capabilities soon to be added
 
 ## Teck Stack:
-
-TypeScript, Next.js, TailwindCSS, Vercel
+- TypeScript
+- Next.js
+- TailwindCSS
+- Vercel
+- Redis Database
